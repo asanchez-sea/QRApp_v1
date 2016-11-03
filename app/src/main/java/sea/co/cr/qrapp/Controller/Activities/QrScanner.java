@@ -2,7 +2,6 @@ package sea.co.cr.qrapp.Controller.Activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,22 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.example.asanchezo.qrapp.R;
 import com.google.zxing.Result;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import sea.co.cr.qrapp.Controller.CargaAsistente;
-import sea.co.cr.qrapp.Model.Asistente;
 
 import static sea.co.cr.qrapp.Model.Asistente.getAsistenteSingleton;
 
@@ -81,13 +67,11 @@ public class QrScanner extends AppCompatActivity implements ZXingScannerView.Res
     /*El resultado de la lectura se obtiene de este metodo*/
         Log.v("handleResult",result.getText());
         mScannerView.resumeCameraPreview(this);
-        new CargaAsistente().execute();
-        try {
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         getAsistenteSingleton().setAsistente(result.getText());
+        getAsistenteSingleton().setEstado("");
+        getAsistenteSingleton().setEmpresa("");
+        getAsistenteSingleton().setNombre("");
+        getAsistenteSingleton().setCorreoElectronico("");
         finish();
         Intent k = new Intent(QrScanner.this, DatosAsistente.class);
         startActivity(k);
